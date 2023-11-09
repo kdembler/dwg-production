@@ -14,7 +14,7 @@ metricbeat.modules:
       - fsstat
     processors:
       - drop_event.when.regexp:
-          system.network.name: "^(lo|docker0|br-|veth.*)$"
+          system.network.name: "^(lo|docker0|br-.*|veth.*)$"
 
   - module: docker
     metricsets:
