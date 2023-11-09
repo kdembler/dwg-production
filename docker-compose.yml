@@ -195,7 +195,7 @@ services:
     container_name: apm-server
     command: |
       --strict.perms=false -e
-      -E output.elasticsearch.hosts=["${ELASTIC_HOST}"]
+      -E output.elasticsearch.hosts=["${ELASTIC_URL}"]
       -E output.elasticsearch.username=${ELASTIC_USERNAME}
       -E output.elasticsearch.password=${ELASTIC_PASSWORD}
       -E output.elasticsearch.ssl.verification_mode=none
