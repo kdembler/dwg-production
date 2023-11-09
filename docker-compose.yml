@@ -299,9 +299,6 @@ services:
       --keyFile /keystore/keyfile.json
       "
 
-volumes:
-  prometheus-data: {}
-
 networks:
   default:
     name: joystream_default
