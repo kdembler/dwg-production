@@ -66,7 +66,8 @@ services:
       - TYPEORM_LOGGING=error
       - PROCESSOR_HOST=processor
       - PROCESSOR_STATE_APP_PORT=${PROCESSOR_STATE_APP_PORT}
-      - ENABLE_TELEMETRY=${ENABLE_TELEMETRY:-no}
+      # - ENABLE_TELEMETRY=${ENABLE_TELEMETRY:-no}
+      - ENABLE_TELEMETRY=no # graphql-server generates a lot of traces, disabled for now
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://collector:4318
       - OTEL_RESOURCE_ATTRIBUTES=service.name=query-node,deployment.environment=production
       - NODE_ENV=${NODE_ENV}
@@ -211,6 +212,7 @@ services:
       -E output.elasticsearch.hosts=["${ELASTIC_URL}"]
       -E output.elasticsearch.username=${ELASTIC_USERNAME}
       -E output.elasticsearch.password=${ELASTIC_PASSWORD}
+      -E name=${NODE_ID}
     network_mode: host
     environment:
       - DBUS_SYSTEM_BUS_ADDRESS=unix:path=/hostfs/var/run/dbus/system_bus_socket
@@ -262,6 +264,10 @@ services:
       OTEL_EXPORTER_OTLP_ENDPOINT: http://collector:4318
       OTEL_RESOURCE_ATTRIBUTES: service.name=argus,deployment.environment=production
       NODE_ENV: production
+      JOYSTREAM_DISTRIBUTOR__ID: ${NODE_ID}
+      JOYSTREAM_DISTRIBUTOR__LOGS__ELASTIC__ENDPOINT: ${ELASTIC_URL}
+      JOYSTREAM_DISTRIBUTOR__LOGS__ELASTIC__AUTH__USERNAME: ${ELASTIC_USERNAME}
+      JOYSTREAM_DISTRIBUTOR__LOGS__ELASTIC__AUTH__PASSWORD: ${ELASTIC_PASSWORD}
     entrypoint: ["/joystream/distributor-node/runner.sh"]
     command: ["start"]
 
